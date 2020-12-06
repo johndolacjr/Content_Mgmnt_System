@@ -1,0 +1,10 @@
+1, John, Dolac, Manager, Customer Service, 1000000, null
+2, Jenny, Pizzaz, Sales Rep, Sales, 100000, John Dolac
+3, Alex, Smith, Developer, Technology, 85000, John Dolac
+4, Sarah, Jackson, Customer Service Rep, Customer Service, 45000, John Dolac
+5, Max, Amillion, Manager, Marketing, 250000, Austin Powers
+6, Marshall, Matthers, Customer Service Rep, Marketing, 50000, Max Amillion
+7, 50, Cent, Sales Rep, Sales, 150000, John Dolac
+8, Jessica, Parkerhouse, Developer, Technology, 90000, John Dolac
+9, Amber, Lager, Customer Service Rep, Customer Service, 45000, John Dolac
+10, Jackson, Holer, Customer Service Rep, Marketing, 50000, Max Amillion
