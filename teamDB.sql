@@ -28,7 +28,7 @@ CREATE TABLE Employee_table (
 );
 
 INSERT INTO Department_table (id) VALUES ("");
-INSERT INTO Department_table (DepartmentName) VALUES ("Sales"), ("Marketing"), ("Development"), ("Supplier Services");
+INSERT INTO Department_table (DepartmentName) VALUES ("Sales"), ("Marketing"), ("Technology"), ("Supplier Services");
 
 INSERT INTO Role_table (id) VALUES ("");
 INSERT INTO Role_table (title) VALUES ("Manager"), ("Sales Rep"), ("Developer"), ("Customer Service Rep");

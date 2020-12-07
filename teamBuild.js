@@ -1,16 +1,15 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
 const express = require("express");
+const questions = require('./lib/query.js');
+
 
 var connection = mysql.createConnection({
   host: "localhost",
-
   // Your port; if not 8080
   port: 8080,
-
   // Your username
   user: "root",
-
   // Your password
   password: "Password1",
   database: "teamdb"
@@ -18,166 +17,140 @@ var connection = mysql.createConnection({
 
 connection.connect(function(err) {
   if (err) throw err;
-  runSearch();
+  startQuestions();
 });
 
-function manageTeam() {
-  inquirer.prompt({
-      name: "action",
-      type: "list",
-      message: "What would you like to do?",
-      choices: [
-        "View Department?",
-        "View Role?",
-        "View Employee?",
-        "Add Department?",
-        "Add Roles?",
-        "Add Employees?",
-        "Update Employee Role",
-        "exit"
-      ]
-    })
-    .then(function(answer) {
-      switch (answer.action) {
-      case "View Department":
-        viewDept();
-        break;
-
-      case "View Role":
-        viewRole();
-        break;
-
-      case "View Employee":
-        viewEmployee();
-        break;
-
-      case "Add Department":
-        addDept();
-        break;
-
-      case "Add Roles":
-        addRole();
-        break;
-
-      case "Add Employee":
-        addEmployee();
-        break;
-
-        case "Update Employee":
-          updateEmployee();
+function startQuestions() {
+  inquirer.prompt(questions.start)
+  .then(answer => {
+    console.log(answer)
+    switch(answer.start) {
+// Case switches to ADD dept, role, and employee
+      case 'add department': addDept(); 
+          break;
+      case 'add role': addRole(); 
+          break;
+      case 'add employee': addEmployee(); 
           break;
 
-      case "exit":
-        connection.end();
+// Case switches to VIEW dept, role, and employee
+      case 'view all departments': viewDept(); 
+          break;
+      case 'view all roles': viewRole(); 
+          break;
+      case 'view all employees': viewEmployee(); 
+          break;
+
+// Case switches to REMOVE dept, role, and employee
+      case 'remove department': removeDept(); 
+          break;
+      case 'remove role': removeRole(); 
+          break;
+      case 'remove employee': removeEmployee(); 
+          break;
+
+// Case switches to UPDATE dept, role, and employee
+      case 'update employee department': updateDepartment(); 
+          break;
+      case 'update employee role': updateRole(); 
+          break;
+      case 'update employee manager': updateManager(); 
+          break;
+
+// Case switches to END
+      case 'quit' : 
         break;
-      }
+    }
+})
+.catch(err => {
+  if(err) throw err;
+});
+}
+
+// Functions to ADD Dept, Role, and Employees
+function addDept() {
+  inquirer
+    .prompt(questions.this)
+    .then(answer => {
+      console.log("Need to push to server")
+      console.log(answer);
+      startQuestions()
+    })
+    .catch(err => {
+      if (err) throw err;
     });
 }
 
-function viewDept() {
-  inquirer
-    .prompt({
-    // ("Sales"), ("Marketing"), ("Technology"), ("Supplier Services");
-      name: "dept",
-      type: "list",
-      message: "What department would you like to see?",
-      choices: ["Sales", "Marketing", "Technology", "Customer Service" ]
-    })
-    .then(function(answer) {
-      var query = "SELECT if (answer.dept === "??") {
-        connection.query(query, { artist: answer.artist }, function(err, res) {
-          if (err) throw err;
-          for (var i = 0; i < res.length; i++) {
-            console.log("Position: " + res[i].position + " || Song: " + res[i].song + " || Year: " + res[i].year);
-          }
-          runSearch();
-        });
-      });
-
-    };
-      
-}
-
-function multiSearch() {
-  var query = "SELECT artist FROM top5000 GROUP BY artist HAVING count(*) > 1";
-  connection.query(query, function(err, res) {
-    if (err) throw err;
-    for (var i = 0; i < res.length; i++) {
-      console.log(res[i].artist);
-    }
-    runSearch();
+function addRole(){
+  connection.query(queryList.deptList, function(err, res){
+      if (err) throw err;
+      let deptList = res;
+      let deptListNames = res.map(dept => dept.name);
+      let queryAdd = new questions.queryAdd("department", "Which department is this role in?", deptListNames)
+      let choices = [questions.addRole, queryAdd];
+      inquirer
+          .prompt(choices)
+          .then(answer => {
+              const newRole = answer;
+              newRole.departmentId = deptList.filter(d => d.name === newRole.department).map(id => id.id).shift();
+              startQuestions()
+          })
+          .catch(err => {
+          if(err) throw err;
+          });
   });
 }
 
-function rangeSearch() {
-  inquirer
-    .prompt([
-      {
-        name: "start",
-        type: "input",
-        message: "Enter starting position: ",
-        validate: function(value) {
-          if (isNaN(value) === false) {
-            return true;
-          }
-          return false;
-        }
-      },
-      {
-        name: "end",
-        type: "input",
-        message: "Enter ending position: ",
-        validate: function(value) {
-          if (isNaN(value) === false) {
-            return true;
-          }
-          return false;
-        }
-      }
-    ])
-    .then(function(answer) {
-      var query = "SELECT position,song,artist,year FROM top5000 WHERE position BETWEEN ? AND ?";
-      connection.query(query, [answer.start, answer.end], function(err, res) {
-        if (err) throw err;
-        for (var i = 0; i < res.length; i++) {
-          console.log(
-            "Position: " +
-              res[i].position +
-              " || Song: " +
-              res[i].song +
-              " || Artist: " +
-              res[i].artist +
-              " || Year: " +
-              res[i].year
-          );
-        }
-        runSearch();
-      });
-    });
+function addEmployee(){
+  connection.query(queryList.deptList, function(err, res){
+      if (err) throw err;
+      let depts = res;
+      let deptNameList = res.map(dept => dept.name);
+      let query = new questions.queryAdd("department", "Which department is this employee in?", deptNameList);
+      let choices = [];
+      choices.push(query);
+      inquirer
+          .prompt(choices)
+          .then(answer => {
+              let dept = depts.filter(d => d.name === answer.department);
+              addEmployee(dept);
+          })
+          .catch(err => {
+              if(err) throw err;
+          });
+  });
 }
 
-function songSearch() {
-  inquirer
-    .prompt({
-      name: "song",
-      type: "input",
-      message: "What song would you like to look for?"
-    })
-    .then(function(answer) {
-      console.log(answer.song);
-      connection.query("SELECT * FROM top5000 WHERE ?", { song: answer.song }, function(err, res) {
-        if (err) throw err;
-        console.log(
-          "Position: " +
-            res[0].position +
-            " || Song: " +
-            res[0].song +
-            " || Artist: " +
-            res[0].artist +
-            " || Year: " +
-            res[0].year
-        );
-        runSearch();
-      });
-    });
+// Functions to VIEW depts, roles, and employees
+function viewDept(){
+  connection.query(queryList.deptListDept, function(err, res){
+      if(err) throw err;
+      console.table(res);
+      startQuestions();
+  })
 }
+function viewRole(){
+  connection.query(queryList.roleListDept, function(err, res){
+      if(err) throw err;
+      console.table(res);
+      startQuestions();
+  })
+}
+function viewEmployee(){
+  connection.query(queryList.viewListDept, function(err, res){
+      if(err) throw err;
+      console.table(res);
+      startQuestions();
+  })
+}
+
+
+// Functions to REMOVE depts, roles, and employees
+
+// Functions to UPDATE employee depts, roles, and managers
+
+
+
+
+
+
