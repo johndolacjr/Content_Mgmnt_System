@@ -1,7 +1,8 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
 const express = require("express");
-const questions = require('./lib/query.js');
+const questions = require('./lib/queries.js');
+const queryList = require('./lib/questions.js');
 
 
 var connection = mysql.createConnection({
@@ -41,14 +42,6 @@ function startQuestions() {
       case 'view all employees': viewEmployee(); 
           break;
 
-// Case switches to REMOVE dept, role, and employee
-      case 'remove department': removeDept(); 
-          break;
-      case 'remove role': removeRole(); 
-          break;
-      case 'remove employee': removeEmployee(); 
-          break;
-
 // Case switches to UPDATE dept, role, and employee
       case 'update employee department': updateDepartment(); 
           break;
@@ -72,9 +65,7 @@ function addDept() {
   inquirer
     .prompt(questions.this)
     .then(answer => {
-      console.log("Need to push to server")
-      console.log(answer);
-      startQuestions()
+     startQuestions()
     })
     .catch(err => {
       if (err) throw err;
@@ -86,7 +77,7 @@ function addRole(){
       if (err) throw err;
       let deptList = res;
       let deptListNames = res.map(dept => dept.name);
-      let queryAdd = new questions.queryAdd("department", "Which department is this role in?", deptListNames)
+      let queryAdd = new questions.queryAdd("department", "What role are you adding?", deptListNames)
       let choices = [questions.addRole, queryAdd];
       inquirer
           .prompt(choices)
@@ -106,7 +97,7 @@ function addEmployee(){
       if (err) throw err;
       let depts = res;
       let deptNameList = res.map(dept => dept.name);
-      let query = new questions.queryAdd("department", "Which department is this employee in?", deptNameList);
+      let query = new questions.queryAdd("department", "Enter employee name: ", deptNameList);
       let choices = [];
       choices.push(query);
       inquirer
@@ -129,6 +120,7 @@ function viewDept(){
       startQuestions();
   })
 }
+
 function viewRole(){
   connection.query(queryList.roleListDept, function(err, res){
       if(err) throw err;
@@ -136,6 +128,7 @@ function viewRole(){
       startQuestions();
   })
 }
+
 function viewEmployee(){
   connection.query(queryList.viewListDept, function(err, res){
       if(err) throw err;
@@ -144,11 +137,59 @@ function viewEmployee(){
   })
 }
 
-
-// Functions to REMOVE depts, roles, and employees
+// Functions to REMOVE depts, roles, and employees---> if i have time 
 
 // Functions to UPDATE employee depts, roles, and managers
+function updateDept() {
+  inquirer
+    .prompt(questions.this)
+    .then(answer => {
+     startQuestions()
+    })
+    .catch(err => {
+      if (err) throw err;
+    });
+}
 
+function updateRole(){
+  connection.query(queryList.deptList, function(err, res){
+      if (err) throw err;
+      let deptList = res;
+      let deptListNames = res.map(dept => dept.name);
+      let queryAdd = new questions.queryAdd("department", "What role would you like to update?", deptListNames)
+      let choices = [questions.addRole, queryAdd];
+      inquirer
+          .prompt(choices)
+          .then(answer => {
+              const newRole = answer;
+              newRole.departmentId = deptList.filter(d => d.name === newRole.department).map(id => id.id).shift();
+              startQuestions()
+          })
+          .catch(err => {
+          if(err) throw err;
+          });
+  });
+}
+
+function updateEmployee(){
+  connection.query(queryList.deptList, function(err, res){
+      if (err) throw err;
+      let depts = res;
+      let deptNameList = res.map(dept => dept.name);
+      let query = new questions.queryAdd("department", "Who would you like to level up?", deptNameList);
+      let choices = [];
+      choices.push(query);
+      inquirer
+          .prompt(choices)
+          .then(answer => {
+              let dept = depts.filter(d => d.name === answer.department);
+              addEmployee(dept);
+          })
+          .catch(err => {
+              if(err) throw err;
+          });
+  });
+}
 
 
 

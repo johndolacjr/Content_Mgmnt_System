@@ -9,14 +9,12 @@ const start = {
         'view all departments', 
         'view all roles', 
         'view all employees', 
-        'remove department',
-        'remove role', 
-        'remove employee', 
         'update employee department',          
         'update employee role', 
         'update employee manager', 
         'exit']
 }
+
 // Questions to ADD dept, role, and employee
 const addDept = {
     type:'input',
@@ -41,7 +39,6 @@ const addEmployee = [{
     message: 'Enter teammates last name: '
 }];
 
-
 // Questions to VIEW dept, role, and employee
 const viewDept = {
     type:'list',
@@ -59,25 +56,6 @@ const viewEmployee = {
     type:'input',
     name: 'empName',
     message: 'Enter employee name: '
-}; 
-
-//Questions to REMOVE dept, role, employee
-const removeDept = {
-    type:'list',
-    name: 'deptName',
-    message: 'What department would you like to remove?',
-    choices: ["Sales", "Marketing", "Technology", "Customer Service"]
-}
-const removeRole = {
-    type:'list',
-    name: 'roles',
-    message: 'What role would you like to remove?', 
-    choices: ["Manager", "Sales Rep", "Developer", "Customer Service Rep"]
-}
-const removeEmployee = {
-    type:'input',
-    name: 'empName',
-    message: 'Who would you like to delete FOREVER? '
 }; 
 
 //Questions to UPDATE dept, role, employee
@@ -116,9 +94,6 @@ const questions = {
     addDept:addDept, 
     addRole:addRole,
     addEmployee:addEmployee,
-    removeDept:removeDept, 
-    removeRole:removeRole,
-    removeEmployee:removeEmployee,
     updateDept:updateDept, 
     updateRole:updateRole,
     updateEmployee:updateEmployee,
