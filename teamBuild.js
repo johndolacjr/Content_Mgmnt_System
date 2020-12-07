@@ -1,14 +1,14 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
 const express = require("express");
-const questions = require('./lib/queries.js');
-const queryList = require('./lib/questions.js');
+const queryList = require('./lib/queries.js');
+const questions = require('./lib/questions.js');
 
 
 var connection = mysql.createConnection({
   host: "localhost",
-  // Your port; if not 8080
-  port: 8080,
+  // Your port; if not 3306
+  port: 3306,
   // Your username
   user: "root",
   // Your password
@@ -18,6 +18,7 @@ var connection = mysql.createConnection({
 
 connection.connect(function(err) {
   if (err) throw err;
+  console.log("serverStarted")
   startQuestions();
 });
 

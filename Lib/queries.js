@@ -7,7 +7,7 @@ const managers =
 const depts = "SELECT name, id FROM Department_table";
 const employeeId = "SELECT CONCAT (first_name, ' ', last_name) AS name, id";
 const roles = "SELECT title, id, department_id FROM role";
-const managers = "SELECT CONCAT (first_name, ' ' , last_name) AS name, id FROM employee";
+const managerId = "SELECT CONCAT (first_name, ' ' , last_name) AS name, id FROM employee";
 const insertEmployees = "INSERT INTO employee SET ?";
 const rolesByDept = "SELECT title, salary, name AS department_name FROM role LEFT JOIN department ON department_id = department.id";
 
@@ -17,7 +17,7 @@ const queriesList = {
     depts: depts,
     employeeId: employeeId,
     roles: roles,
-    managers: managers,
+    managerId: managerId,
     insertEmployees: insertEmployees,
     rolesByDept: rolesByDept
 }
