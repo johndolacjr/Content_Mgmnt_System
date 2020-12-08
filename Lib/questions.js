@@ -17,9 +17,15 @@ const start = {
 
 // Questions to ADD dept, role, and employee
 const addDept = {
-    type:'input',
+    type:'list',
     name: 'departmentName',
-    message: 'What department are you adding?'
+    message: 'What department are you adding?',
+    choices: [
+        'Sales',
+        'Marketing',
+        'Technology',
+        'Supplier Services'
+    ]
 }
 
 const addRole = {

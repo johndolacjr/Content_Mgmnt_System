@@ -64,7 +64,7 @@ function startQuestions() {
 // Functions to ADD Dept, Role, and Employees
 function addDept() {
   inquirer
-    .prompt(questions.this)
+    .prompt(questions.addDept)
     .then(answer => {
      startQuestions()
     })
