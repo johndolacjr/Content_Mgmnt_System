@@ -1,10 +1,10 @@
 const employee =
-    "SELECT first_name, last_name, title, salary, name as department_name FROM employee LEFT JOIN role ON role_id = role.id LEFT JOIN department ON department_id = department.id";
+    "SELECT first_name, last_name, title, salary, department_name FROM Employee_table LEFT JOIN Role_table ON Employee_table.role_id = Role_table.id LEFT JOIN Department_table ON Role_table.department_id = Department_table.id";
 
 const managers = 
     "SELECT t.first_name, t.last_name, e.first_name as manager_name, e.last_name as manager_surname FROM employee as t LEFT JOIN employee as e on t.manager_id = e.id";
 
-const depts = "SELECT name, id FROM Department_table";
+const depts = "SELECT DepartmentName, id FROM Department_table";
 const employeeId = "SELECT CONCAT (first_name, ' ', last_name) AS name, id";
 const roles = "SELECT title, id, department_id FROM role";
 const managerId = "SELECT CONCAT (first_name, ' ' , last_name) AS name, id FROM employee";

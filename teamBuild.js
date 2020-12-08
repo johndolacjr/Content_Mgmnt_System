@@ -1,7 +1,7 @@
 const mysql = require("mysql");
 const inquirer = require("inquirer");
 const express = require("express");
-const queryList = require('./lib/queries.js');
+const queriesList = require('./lib/queries.js');
 const questions = require('./lib/questions.js');
 
 
@@ -115,7 +115,7 @@ function addEmployee(){
 
 // Functions to VIEW depts, roles, and employees
 function viewDept(){
-  connection.query(queryList.deptListDept, function(err, res){
+  connection.query(queriesList.depts, function(err, res){
       if(err) throw err;
       console.table(res);
       startQuestions();
@@ -123,7 +123,7 @@ function viewDept(){
 }
 
 function viewRole(){
-  connection.query(queryList.roleListDept, function(err, res){
+  connection.query(queriesList.roles, function(err, res){
       if(err) throw err;
       console.table(res);
       startQuestions();
@@ -131,7 +131,7 @@ function viewRole(){
 }
 
 function viewEmployee(){
-  connection.query(queryList.viewListDept, function(err, res){
+  connection.query(queriesList.employee, function(err, res){
       if(err) throw err;
       console.table(res);
       startQuestions();

@@ -8,38 +8,30 @@ USE teamDB;
 
 -- Creates the table "Team_Table" within teamDB --
 CREATE TABLE Department_table (
-  id INT PRIMARY KEY NOT NULL,
-  DepartmentName VARCHAR(30) NOT NULL
+  id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+  department_name VARCHAR(30) NOT NULL
 );
 
 CREATE TABLE Role_table (
-    id INT PRIMARY KEY NOT NULL,
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
     title VARCHAR(30),
     salary DECIMAL,
-    departmentId INT
+    department_id INT
 );
 
 CREATE TABLE Employee_table (
-    id INT PRIMARY KEY NOT NULL,
-    firstName VARCHAR(30),
-    lastName VARCHAR(30), 
-    roleId INT,
-    managerId INT
+    id INT AUTO_INCREMENT PRIMARY KEY NOT NULL,
+    first_name VARCHAR(30),
+    last_name VARCHAR(30), 
+    role_id INT,
+    manager_id INT
 );
 
-INSERT INTO Department_table (id) VALUES ("");
-INSERT INTO Department_table (DepartmentName) VALUES ("Sales"), ("Marketing"), ("Technology"), ("Supplier Services");
+INSERT INTO Department_table (department_name) VALUES ("Sales"), ("Marketing"), ("Technology"), ("Supplier Services");
 
-INSERT INTO Role_table (id) VALUES ("");
-INSERT INTO Role_table (title) VALUES ("Manager"), ("Sales Rep"), ("Developer"), ("Customer Service Rep");
-INSERT INTO Role_table (salary) VALUES ("$75K"), ("$65K"), ("$90K"), ("$45K");
-INSERT INTO Role_table (departmentId) VALUES ("");
+INSERT INTO Role_table (title, salary, department_id) VALUES ("Manager", 1000000000.00, 1), ("Sales Rep", 500000.50, 2);
 
-INSERT INTO Employee_table (id) VALUES ("");
-INSERT INTO Employee_table (firstName) VALUES ("first name");
-INSERT INTO Employee_table (lastName) VALUES ("last name");
-INSERT INTO Employee_table (roleId) VALUES ("role id");
-INSERT INTO Employee_table (managerId) VALUES ("manager id");
+INSERT INTO Employee_table (first_name, last_name, role_id) VALUES ("John", "Dolac", 1), ("Tyler", "Bolty", 2); 
 
 SELECT * FROM Department_table;
 SELECT * FROM Role_table;
