@@ -27,11 +27,26 @@ CREATE TABLE Employee_table (
     manager_id INT
 );
 
-INSERT INTO Department_table (department_name) VALUES ("Sales"), ("Marketing"), ("Technology"), ("Supplier Services");
+INSERT INTO Department_table (department_name) 
+VALUES 
+("Sales"), 
+("Marketing"), 
+("Technology"), 
+("Supplier Services");
 
-INSERT INTO Role_table (title, salary, department_id) VALUES ("Manager", 1000000000.00, 1), ("Sales Rep", 500000.50, 2);
+INSERT INTO Role_table (title, salary, department_id) 
+VALUES 
+("Manager", 1000000000.00, 1),
+("Sales Rep", 75000.00, 2),
+("Marketing Agent", 85000.00, 3),
+("Developer", 150000.01, 4);
 
-INSERT INTO Employee_table (first_name, last_name, role_id) VALUES ("John", "Dolac", 1), ("Sarah", "Connor", 2); 
+INSERT INTO Employee_table (first_name, last_name, role_id, manager_id) 
+VALUES 
+("John", "Dolac", 1, 0), 
+("Sarah", "Connor", 2, 1),
+("Amber", "Lager", 3, 1),
+("Rick", "Morty", 4, 1);
 
 SELECT * FROM Department_table;
 SELECT * FROM Role_table;
