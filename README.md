@@ -2,7 +2,7 @@
     Content_Mgmnt_System
 
 # Image
-    ![image](https://user-images.githubusercontent.com/69832533/101447022-9c89b680-38e1-11eb-8b4d-2fc2d264cd17.png)
+![image](https://user-images.githubusercontent.com/69832533/101447822-37cf5b80-38e3-11eb-8f4a-122af5383a52.png)
 
 
 # Technology 
