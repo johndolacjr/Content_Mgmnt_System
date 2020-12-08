@@ -4,9 +4,9 @@ const employee =
 const managers = 
     "SELECT t.first_name, t.last_name, e.first_name as manager_name, e.last_name as manager_surname FROM employee as t LEFT JOIN employee as e on t.manager_id = e.id";
 
-const depts = "SELECT DepartmentName, id FROM Department_table";
+const depts = "SELECT department_name, id FROM Department_table";
 const employeeId = "SELECT CONCAT (first_name, ' ', last_name) AS name, id";
-const roles = "SELECT title, id, department_id FROM role";
+const roles = "SELECT title, id, department_id FROM Role_table";
 const managerId = "SELECT CONCAT (first_name, ' ' , last_name) AS name, id FROM employee";
 const insertEmployees = "INSERT INTO employee SET ?";
 const rolesByDept = "SELECT title, salary, name AS department_name FROM role LEFT JOIN department ON department_id = department.id";

@@ -31,7 +31,7 @@ INSERT INTO Department_table (department_name) VALUES ("Sales"), ("Marketing"), 
 
 INSERT INTO Role_table (title, salary, department_id) VALUES ("Manager", 1000000000.00, 1), ("Sales Rep", 500000.50, 2);
 
-INSERT INTO Employee_table (first_name, last_name, role_id) VALUES ("John", "Dolac", 1), ("Tyler", "Bolty", 2); 
+INSERT INTO Employee_table (first_name, last_name, role_id) VALUES ("John", "Dolac", 1), ("Sarah", "Connor", 2); 
 
 SELECT * FROM Department_table;
 SELECT * FROM Role_table;

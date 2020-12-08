@@ -23,9 +23,14 @@ const addDept = {
 }
 
 const addRole = {
-    type: 'input',
+    type: 'list',
     name: 'role',
-    message: 'What role are you adding?'
+    message: 'What role are you adding?', 
+    choices: [
+        'Manager',
+        'Customer Service',
+        'Sales Rep'
+    ]
 }
 
 const addEmployee = [{
@@ -78,7 +83,7 @@ const updateEmployee = {
 }; 
 
 class queryAdd {
-    constructor(name, message, choices){
+    constructor(name, message, choices) {
         this.type = 'list';
         this.name = name;
         this.message = message;

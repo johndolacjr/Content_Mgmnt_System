@@ -74,7 +74,7 @@ function addDept() {
 }
 
 function addRole(){
-  connection.query(queryList.deptList, function(err, res){
+  connection.query(queriesList.depts, function(err, res){
       if (err) throw err;
       let deptList = res;
       let deptListNames = res.map(dept => dept.name);
@@ -82,6 +82,7 @@ function addRole(){
       let choices = [questions.addRole, queryAdd];
       inquirer
           .prompt(choices)
+          //missing perameter answer, ...?
           .then(answer => {
               const newRole = answer;
               newRole.departmentId = deptList.filter(d => d.name === newRole.department).map(id => id.id).shift();
@@ -94,18 +95,21 @@ function addRole(){
 }
 
 function addEmployee(){
-  connection.query(queryList.deptList, function(err, res){
+  connection.query(queriesList.depts, function(err, res){
       if (err) throw err;
       let depts = res;
-      let deptNameList = res.map(dept => dept.name);
-      let query = new questions.queryAdd("department", "Enter employee name: ", deptNameList);
+      let deptNameList = res.map(dept => dept.department_name);
+      let query = new questions.queryAdd("department", "Which Dept. does Employee belong to? ", deptNameList);
       let choices = [];
       choices.push(query);
       inquirer
-          .prompt(choices)
+      //can put more in the array to create employee  - look at questions
+          .prompt([...questions.addEmployee, choices])
+             // missing perameter answer, ...?
           .then(answer => {
               let dept = depts.filter(d => d.name === answer.department);
-              addEmployee(dept);
+              //repeat for first name, last name, departments. 
+              connection.query(queriesList.insertEmployees, {first_name:answers.firstName, last_name:answers.lastName});
           })
           .catch(err => {
               if(err) throw err;
